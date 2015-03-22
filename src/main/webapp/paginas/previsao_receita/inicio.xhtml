@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<ui:composition template="/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+
+		<f:viewAction action="#{previsaoReceitaController.iniciarDados()}" />
+
+	</f:metadata>
+
+	<ui:define name="titulo">Previsão de Receitas</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+
+			<h3>Previsão de Receitas</h3>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span2" style="margin-top: 20px;">
+
+						<p:commandButton id="btnNovo" immediate="true" ajax="false" value="Novo" styleClass="btn btn-primary"
+							action="/paginas/previsao_receita/inserir?faces-redirect=true" />
+
+					</div>
+
+					<div class="span3">
+
+						<p:outputLabel value="Situação" />
+
+						<p:selectOneMenu id="idComboboxSituacao" value="#{previsaoReceitaController.formulario.situacaoPrevisaoSelecionada}">
+
+							<f:selectItems value="#{previsaoReceitaController.formulario.listaSituacao}" var="situacao" itemLabel="#{situacao.descricao}"
+								itemValue="#{situacao}" />
+
+							<p:ajax event="change" update="dtTablePrevisaoReceita" listener="#{previsaoReceitaController.pesquisar()}" />
+
+						</p:selectOneMenu>
+
+					</div>
+
+					<div class="span7"></div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12" style="margin-top: 10px;">
+
+					<p:dataTable value="#{previsaoReceitaController.formulario.listagemPrevisaoReceita}" var="item" border="1" cellspacing="0" cellpadding="2"
+						paginator="true" rows="5" paginatorPosition="bottom" emptyMessage="Nenhum resultado!" lazy="true" id="dtTablePrevisaoReceita"
+						paginatorTemplate=" {CurrentPageReport} {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						currentPageReportTemplate="#{message['label.mostrando']} {startRecord} #{message['label.ate']} {endRecord} #{message['label.de']} {totalRecords} #{message['label.encontrados']}">
+
+						<p:column headerText="Código" width="100" style="text-align: center" sortBy="#{item.id}">
+							<h:outputText value="#{item.id}" />
+						</p:column>
+
+						<p:column headerText="Descrição" sortBy="#{item.descricaoReceita}" filterBy="#{item.descricaoReceita}">
+							<h:outputText value="#{item.descricaoReceita}" />
+						</p:column>
+
+						<p:column headerText="Observação" sortBy="#{item.observacao}" filterBy="#{item.observacao}">
+							<h:outputText value="#{item.observacao}" />
+						</p:column>
+
+						<p:column headerText="Valor" sortBy="#{item.valor}">
+							<h:outputText value="#{item.valor}">
+								<f:convertNumber pattern="#{previsaoReceitaController.formatoValorReal}" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Data Previsão" style="text-align: center" sortBy="#{item.dataReceita}">
+							<h:outputText value="#{item.dataReceita}">
+								<f:convertDateTime pattern="#{previsaoReceitaController.formatoData}" timeZone="#{previsaoReceitaController.timeZone}" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Situação" sortBy="#{item.situacao.descricao}">
+							<h:outputText value="#{item.situacao.descricao}" />
+						</p:column>
+
+						<p:column headerText="Ações" width="100" style="text-align: center;">
+
+							<p:button icon="ui-icon-pencil" title="Editar" outcome="/paginas/previsao_receita/inserir">
+								<f:param name="id" value="#{item.id}" />
+							</p:button>
+
+							<p:commandButton rendered="#{item.situacao.descricao.equals('Confirmada')}" icon="ui-icon-arrowreturnthick-1-w" title="Estornar"
+								process="@this" update="@form" action="#{previsaoReceitaController.cancelarConfirmacaoPrevisaoReceita()}">
+
+								<f:setPropertyActionListener value="#{item}" target="#{previsaoReceitaController.formulario.consulta}" />
+
+								<p:confirm header="Confirmação" message="Confirma o estorno da Previsão de Receita?" icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:commandButton rendered="#{!item.situacao.descricao.equals('Confirmada')}" icon="ui-icon-check" title="Confirmar"
+								action="/paginas/previsao_receita/confirmar?faces-redirect=true" ajax="false" >
+								<f:setPropertyActionListener value="#{item}" target="#{previsaoReceitaController.formulario.consulta}" />
+							</p:commandButton>
+							
+							<p:commandButton rendered="#{!item.situacao.descricao.equals('Confirmada')}" icon="ui-icon-closethick" title="Excluir" process="@this" update="@form"
+								action="#{previsaoReceitaController.desativarPrevisao()}">
+								<f:setPropertyActionListener value="#{item}" target="#{previsaoReceitaController.formulario.consulta}" />
+								<p:confirm header="Confirmação" message="Confirma a Exclusão?" icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<center>
+									<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</center>
+							</p:confirmDialog>
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+			</div>
+
+		</h:form>
+
+		<p:dialog header="Confirmar Previsão Receita" widgetVar="confirmarReceita" modal="true" width="500" height="350">
+
+			
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

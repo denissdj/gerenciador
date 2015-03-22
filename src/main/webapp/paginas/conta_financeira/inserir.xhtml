@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<ui:composition template="/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<f:metadata>
+
+		<o:viewParam name="id" value="#{contaFinanceiraController.formulario.entidade}" />
+
+		<f:viewAction action="#{contaFinanceiraController.prepararCadastro()}" />
+
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Contas Financeiras</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmContaFinanceira">
+
+			<h3>
+
+				<h:outputText value="Nova Conta Financeira" rendered="#{contaFinanceiraController.formulario.entidade.new}" />
+
+				<h:outputText value="Editar Conta Financeira" rendered="#{!contaFinanceiraController.formulario.entidade.new}" />
+
+			</h3>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Descrição" for="descricao" />
+
+						<p:inputText id="descricao" size="60" value="#{contaFinanceiraController.formulario.entidade.nomeContaFinanceira}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Observação" for="observacao" />
+
+						<p:inputText id="observacao" size="60" value="#{contaFinanceiraController.formulario.entidade.observacao}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Saldo" for="saldo" />
+
+						<p:inputText id="saldo" size="12" value="#{contaFinanceiraController.formulario.entidade.saldo}"
+							readonly="#{!contaFinanceiraController.formulario.entidade.new}" style="width: 98%;">
+
+							<f:convertNumber locale="pt_BR" maxFractionDigits="2" minFractionDigits="2" />
+
+						</p:inputText>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12" style="margin-top: 15px;">
+
+					<p:commandButton value="Salvar" action="#{contaFinanceiraController.salvar()}" styleClass="btn btn-primary" ajax="false" />
+
+					<p:spacer width="30" />
+
+					<p:commandButton id="btnVoltar" ajax="false" immediate="true" value="Voltar" styleClass="btn btn-default"
+						action="/paginas/conta_financeira/inicio?faces-redirect=true" />
+
+				</div>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

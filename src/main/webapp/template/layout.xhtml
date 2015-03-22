@@ -1,0 +1,193 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{facesContext.externalContext.requestContextPath}/resources/img/favicon.ico" />
+
+	<title><ui:insert name="titulo">Gerenciador Pessoal</ui:insert></title>
+
+	<h:outputStylesheet library="css" name="estilo.css" />
+
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/css/bootstrap.min.css" />
+
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/loading-bar.min.css"
+		rel="stylesheet" />
+
+	<h:outputScript library="js" name="lang_pt_br.js" />
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/js/bootstrap.js"></script>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/resources/js/controle_sessao.js" />
+
+</h:head>
+
+<h:body data-spy="scroll" data-target=".bs-docs-sidebar"
+	data-twttr-rendered="true">
+
+	<div class="navbar navbar-fixed-top">
+
+		<div class="navbar-inner">
+
+			<div class="container-fluid">
+
+				<h:form>
+
+					<input id="tempoSessao" type="hidden"
+						value="#{efetuarLoginController.loginForm.tempoSessao}" />
+
+					<h:graphicImage library="img" name="img-logo.png" width="120"
+						height="30" />
+
+					<p:menubar transient="true" style="margin-top: 0px;">
+
+						<p:menuitem value="Início" url="/paginas/principal.jsf"
+							icon="ui-icon-home" ajax="false" />
+
+						<p:submenu label="Operações" icon="ui-icon-gear">
+
+							<p:menuitem value="Previsão de Receitas" ajax="true"
+								action="/paginas/previsao_receita/inicio?faces-redirect=true" />
+
+							<p:menuitem value="Transferência entre contas" ajax="true"
+								action="/paginas/transferencia/inicio?faces-redirect=true" />
+
+						</p:submenu>
+
+						<p:submenu label="Cadastros" icon="ui-icon-disk">
+
+							<p:menuitem value="Usuário" ajax="true"
+								action="/paginas/usuario/inicio?faces-redirect=true"
+								rendered="#{efetuarLoginController.usuarioLogado.userAdmin}" />
+
+							<p:menuitem value="Dados Pessoais" ajax="true"
+								action="#{usuarioController.editarDadosPessoais()}"
+								rendered="#{!efetuarLoginController.usuarioLogado.userAdmin}" />
+
+							<p:menuitem value="Conta Financeira" ajax="true"
+								action="/paginas/conta_financeira/inicio?faces-redirect=true" />
+
+						</p:submenu>
+
+						<p:submenu label="Consultas" icon="ui-icon-document">
+
+
+						</p:submenu>
+
+						<p:submenu label="Configurações" icon="ui-icon-wrench">
+
+							<p:menuitem value="Sistema" ajax="true"
+								action="/paginas/configuracoes/inicio?faces-redirect=true" />
+
+							<p:menuitem value="Controle de Acesso" ajax="true"
+								action="/paginas/configuracoes/inicio?faces-redirect=true" />
+
+						</p:submenu>
+
+						<f:facet name="options">
+
+							<div style="margin: 6px;">
+
+								<p:commandLink title="Sair"
+									action="#{efetuarLoginController.logout}">
+
+									<span class="icon-off" />
+							
+							Sair
+
+						</p:commandLink>
+
+							</div>
+
+						</f:facet>
+
+					</p:menubar>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="conteudo" style="margin-top: 110px">
+
+		<div class="row-fluid">
+
+			<div class="span12">
+
+				<p:messages showDetail="true" showSummary="false" autoUpdate="true"
+					closable="true" />
+
+			</div>
+
+			<ui:insert name="corpo" />
+
+		</div>
+
+	</div>
+
+	<div class="footer" style="margin-top: 15px;">
+
+		<div class="row-fluid">
+
+			<div class="container-fluid">
+
+				<div class="span12" style="margin-top: 15px;">
+
+					<h:outputText value="Sistema Gerenciador Pessoal JavaGyn - " />
+
+					<i class="icon-user"></i>
+
+					<h:outputText
+						value="Usuário: #{efetuarLoginController.loginForm.usuarioLogado.nome} - " />
+
+					<h:outputText value="A sessão expira em: " />
+
+					<input disabled="disabled" id="contadorSessao" size="3"
+						style="width: 25px; border: 0; background-color: #f5f5f5;" />
+
+					<h:outputText value=" segundos" />
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<p:ajaxStatus onstart="PF('gldStatus').show(); resetaContador();"
+		oncomplete="PF('gldStatus').hide();" onerror="PF('gldStatus').hide();" />
+
+	<p:dialog widgetVar="gldStatus" modal="true" closable="false"
+		resizable="false" draggable="false" header="Processando...">
+
+		<h:panelGrid style="text-align:center;">
+
+			<p:graphicImage url="/resources/img/ajaxloadingbar.gif"
+				style="vertical-align: middle;" />
+
+		</h:panelGrid>
+
+	</p:dialog>
+
+	<Script type="text/javascript">
+	
+		var tempoMaximoSessao = document.getElementById('tempoSessao').value;
+		
+ 	</Script>
+
+</h:body>
+
+</html>

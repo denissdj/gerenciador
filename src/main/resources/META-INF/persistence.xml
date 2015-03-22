@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!-- <persistence-unit name=""> -->
+	<!-- </persistence-unit> -->
+
+	<persistence-unit name="financeiro">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
+		
+		<class>br.com.javagyn.model.Configuracoes</class>
+		<class>br.com.javagyn.model.Usuario</class>
+		<class>br.com.javagyn.model.ContaFinanceira</class>
+		<class>br.com.javagyn.model.PrevisaoReceita</class>
+		<class>br.com.javagyn.model.ConfirmarReceita</class>
+		<class>br.com.javagyn.model.Transferencia</class>
+		<class>br.com.javagyn.model.base.EntidadeImpl</class>
+
+		<properties>
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/exemplo_cdi"/> -->
+			<!-- <property name="javax.persistence.jdbc.user" value="postgres" /> -->
+			<!-- <property name="javax.persistence.jdbc.password" value="123456" /> -->
+			<!-- <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
+			<!-- <property name="hibernate.show_sql" value="true" /> -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+			<!-- <property name="hibernate.connection.dialect" value="org.hibernate.dialect.InformixDialect" /> -->
+
+
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.order_updates" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			
+<!-- 			<property name="hibernate.cache.use_query_cache" value="false" /> -->
+<!-- 			<property name="hibernate.cache.use_second_level_cache" value="true" /> -->
+<!-- 			<property name="hibernate.current_session_context_class" value="thread" /> -->
+<!-- 			<property name="hibernate.transaction.auto_close_session" value="false" /> -->
+<!-- 			<property name="hibernate.connection.autocommit" value="false" /> -->
+<!-- 			<property name="hibernate.transaction.flush_before_completion" value="true" /> -->
+<!-- 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" /> -->
+<!-- 			<property name="hibernate.connection.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
+<!-- 			<property name="hibernate.jdbc.batch_size" value="0" /> -->
+<!-- 			<property name="hibernate.jdbc.use_scrollable_resultset" value="false" /> -->
+<!-- 			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" /> -->
+		</properties>
+		
+	</persistence-unit>
+
+</persistence>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<ui:composition template="/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<f:metadata>
+
+		<f:viewAction action="#{transferenciaController.iniciarDados()}" />
+
+	</f:metadata>
+
+	<ui:define name="titulo">Transferência entre Contas</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmTransferencia">
+
+			<h3>
+
+				<h:outputText value="Transferência entre Contas" />
+
+			</h3>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span3">
+
+						<p:outputLabel value="Data da Transferência" for="dataTransferencia" />
+
+						<p:calendar size="12" navigator="true" maxdate="#{transferenciaController.dataAtual}" id="dataTransferencia" pattern="#{transferenciaController.formatoData}" locale="pt_BR"
+							value="#{transferenciaController.formulario.entidade.dataTransferencia}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span3">
+
+						<p:outputLabel value="Valor" for="valor" />
+
+						<p:inputText id="valor" size="12" value="#{transferenciaController.formulario.entidade.valor}" style="width: 98%;">
+
+							<f:convertNumber locale="pt_BR" maxFractionDigits="2" minFractionDigits="2" />
+
+						</p:inputText>
+
+					</div>
+
+				</div>
+
+			</div>
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+					
+					<div class="span6">
+
+						<p:outputLabel value="Conta de Origem" for="conta_origem" />
+						
+						<p:selectOneMenu value="#{transferenciaController.formulario.entidade.contaOrigem}" id="conta_origem">
+							
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							
+							<f:selectItems value="#{transferenciaController.formulario.listaContasFinanceiras}" var="item" itemValue="#{item}" itemLabel="#{item.nomeContaFinanceira}" />
+						
+							<f:ajax event="change" render="saldo_conta_origem"/>
+							
+						</p:selectOneMenu>
+						
+						</div>
+
+						<div class="span6">
+						
+							<p:outputLabel value="Saldo atual Conta Origem" for="saldo_conta_origem" />
+
+							<p:inputText readonly="true" id="saldo_conta_origem" value="#{transferenciaController.formulario.entidade.contaOrigem.saldo}" />
+						
+						</div>
+						
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+						
+						<div class="span6">
+
+						<p:outputLabel value="Conta de Destino" for="conta_destino" />
+
+						<p:selectOneMenu value="#{transferenciaController.formulario.entidade.contaDestino}" id="conta_destino">
+							
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							
+							<f:selectItems value="#{transferenciaController.formulario.listaContasFinanceiras}" var="item" itemValue="#{item}" itemLabel="#{item.nomeContaFinanceira}" />
+							
+							<f:ajax event="change" render="saldo_conta_destino"/>
+						
+						</p:selectOneMenu>
+						
+						</div>
+						
+						<div class="span6">
+						
+							<p:outputLabel value="Saldo atual Conta Destino" for="saldo_conta_destino" />
+
+							<p:inputText readonly="true" id="saldo_conta_destino" value="#{transferenciaController.formulario.entidade.contaDestino.saldo}"/>
+						
+						</div>
+						
+					</div>
+					
+					
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Observação" for="dobservacao" />
+
+						<p:inputText id="dobservacao" size="60" value="#{transferenciaController.formulario.entidade.observacao}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12" style="margin-top: 15px;">
+
+					<div class="span1">
+
+						<p:commandButton value="Transferir" action="#{transferenciaController.efetuarTransferencia()}" styleClass="btn btn-primary" ajax="false" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

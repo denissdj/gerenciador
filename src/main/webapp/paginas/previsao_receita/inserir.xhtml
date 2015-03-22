@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:composition template="/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<f:metadata>
+
+		<o:viewParam name="id" value="#{previsaoReceitaController.formulario.entidade}" />
+
+		<f:viewAction action="#{previsaoReceitaController.prepararCadastro()}" />
+
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de previsão de Receitas</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmPrevisaoReceita">
+		
+			<h3>
+
+				<h:outputText value="Nova Previsão de Receita" rendered="#{previsaoReceitaController.formulario.entidade.new}" />
+
+				<h:outputText value="Editar Previsão de Receita" rendered="#{!previsaoReceitaController.formulario.entidade.new}" />
+
+			</h3>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span3">
+
+						<p:outputLabel value="Data Prevista" for="dataPrevista" />
+
+						<p:calendar size="12" navigator="true" id="dataPrevista" mask="99/99/9999" pattern="#{previsaoReceitaController.formatoData}" locale="pt_BR"
+							value="#{previsaoReceitaController.formulario.entidade.dataReceita}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span3">
+
+						<p:outputLabel value="Valor" for="valor" />
+
+						<p:inputText id="valor" size="12" value="#{previsaoReceitaController.formulario.entidade.valor}" style="width: 98%;">
+
+							<f:convertNumber locale="pt_BR" maxFractionDigits="2" minFractionDigits="2" />
+
+						</p:inputText>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Descrição" for="descricao" />
+
+						<p:inputText id="descricao" size="60" value="#{previsaoReceitaController.formulario.entidade.descricaoReceita}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<p:outputLabel value="Observação" for="dobservacao" />
+
+						<p:inputText id="dobservacao" size="60" value="#{previsaoReceitaController.formulario.entidade.observacao}" style="width: 98%;" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12" style="margin-top: 15px;">
+
+					<div class="span1">
+
+						<p:commandButton value="Salvar" action="#{previsaoReceitaController.salvar()}" styleClass="btn btn-primary" ajax="false" />
+
+					</div>
+					
+					<div class="span1">
+
+						<p:commandButton id="btnVoltar" ajax="false" immediate="true" value="Voltar" styleClass="btn btn-default" action="/paginas/previsao_receita/inicio?faces-redirect=true" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

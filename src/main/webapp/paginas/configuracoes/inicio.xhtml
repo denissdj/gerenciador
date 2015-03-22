@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<ui:composition template="/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+
+		<f:viewAction action="#{configuracoesController.iniciarDados()}" />
+
+	</f:metadata>
+
+	<ui:define name="titulo">Configurações do Sistema</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+
+			<h3>Configurações do Sistema</h3>
+
+			<div class="row-fluid">
+
+				<div class="span12">
+
+					<div class="span6">
+
+						<h:outputLabel for="tempSessao" value="Tempo de Sessão (em segundos):" />
+						
+						<p:inplace id="tempSessao">
+						
+							<p:inputText value="#{configuracoesController.configuracoesForm.entidade.tempoSessao}" required="true" size="4" label="text" />
+						
+						</p:inplace>
+
+					</div>
+
+					<div class="span6"></div>
+
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+
+				<div class="span12" style="margin-top: 15px;">
+
+					<div class="span1">
+
+						<p:commandButton value="Salvar" action="#{configuracoesController.salvar}" styleClass="btn btn-primary" update="@form" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
