@@ -67,9 +67,14 @@ public class AutorizacaoFilter implements Filter {
 		} else {
 
 			final HttpSession session = request.getSession();
+			
+			if(this.getUsuarioLogin().getLoginForm().isLogado()){
+				session.setMaxInactiveInterval(this.getUsuarioLogin().getLoginForm().getTempoSessao());
+			}else{
+				session.setMaxInactiveInterval(86400);
+			}
 
-			session.setMaxInactiveInterval(this.getUsuarioLogin()
-					.getLoginForm().getTempoSessao());
+			
 
 			chain.doFilter(req, res);
 		}

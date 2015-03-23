@@ -63,7 +63,9 @@ public class EfetuarLoginController extends AppController {
 
 		} else {
 
-			AppController.messageError(EfetuarLoginController.USUÁRIO_SENHA_INVALIDOS);
+			//AppController.messageError(EfetuarLoginController.USUÁRIO_SENHA_INVALIDOS);
+			
+			this.abrirModalMensagemWarning(EfetuarLoginController.USUÁRIO_SENHA_INVALIDOS);
 		}
 
 		return null;
@@ -105,7 +107,9 @@ public class EfetuarLoginController extends AppController {
 	 */
 	public String logout() {
 
-		EfetuarLoginForm.setTempoSessao(null);
+		//this.setTempoSessao(null);
+		
+		this.getLoginForm().setTempoSessao(null);
 
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 

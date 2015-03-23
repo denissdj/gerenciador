@@ -37,7 +37,15 @@ function contarTempo() {
 	// unidades: segundos.
 	if (tempoPassado > tempoMaximoSessao / 1) {
 		alert('Sua sessão expirou. Você será redirecionado para a página de login.');
-		location.href = "/index.jsp";
+
+		if(location.host === "localhost:8080"){
+			var nome = location.pathname.split('/');
+			location.href = location.origin + '/' + nome[1];
+		} else {
+			location.href = location.origin;
+			//location.href = "/teste.jsf";
+		}
+		
 	}
 
 	funcaoTimeout = setTimeout("contarTempo()", tempoAtualizacao);

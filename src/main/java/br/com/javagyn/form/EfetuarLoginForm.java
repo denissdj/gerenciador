@@ -44,7 +44,7 @@ public class EfetuarLoginForm implements Serializable {
 	private String senha;
 
 	/** Atributo tempoSessao. */
-	private static Integer tempoSessao;
+	private Integer tempoSessao;
 
 	/** Atributo configuracoesService. */
 	@Inject
@@ -59,12 +59,12 @@ public class EfetuarLoginForm implements Serializable {
 	 */
 	public int getTempoSessao() {
 
-		if (EfetuarLoginForm.tempoSessao == null) {
+		if (this.tempoSessao == null) {
 
 			this.obterTempoSessao();
 		}
 
-		return EfetuarLoginForm.tempoSessao;
+		return this.tempoSessao;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class EfetuarLoginForm implements Serializable {
 	 */
 	public void obterTempoSessao() {
 
-		EfetuarLoginForm.setTempoSessao(this.getConfiguracoesService().getBo().getDao().obter(1L).getTempoSessao());
+		this.setTempoSessao(this.getConfiguracoesService().getBo().getDao().obter(1L).getTempoSessao());
 	}
 
 	/**
@@ -163,9 +163,9 @@ public class EfetuarLoginForm implements Serializable {
 	 * 
 	 * @param tempoSessao
 	 */
-	public static void setTempoSessao(final Integer tempoSessao) {
+	public void setTempoSessao(final Integer tempoSessao) {
 
-		EfetuarLoginForm.tempoSessao = tempoSessao;
+		this.tempoSessao = tempoSessao;
 	}
 
 	/**
